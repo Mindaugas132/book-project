@@ -1,6 +1,8 @@
 package com.mindaugas.book_project.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -25,6 +27,8 @@ public class Book {
     @NonNull
     private String genre;
     @NonNull
+    @Min(value = 1, message = "Rating should not be less than 1")
+    @Max(value = 5, message = "Rating should not be more than 5")
     private Double rating;
     @ElementCollection
     @CollectionTable(name = "book_ratings", joinColumns = @JoinColumn(name = "book_id"))
