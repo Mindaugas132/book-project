@@ -53,10 +53,16 @@ public class BookController {
 
         if (optionalBook.isPresent()) {
             Book book = optionalBook.get();
-            book.setRating(rating);
+            List<Double> newAllRatings = book.getAllRatings();
+            newAllRatings.add(rating);
+            book.setAllRatings(newAllRatings);
+            double sumOfRatings = newAllRatings.stream()
+                    .mapToDouble(Double::doubleValue).sum();
+            book.setRating(sumOfRatings / newAllRatings.size());
             return bookService.saveBook(book);
         } else {
             throw new IllegalArgumentException("Book not found with id: " + id);
         }
+        // To rate without front part use Postman or cmd line e.g.: curl -X PUT "http://localhost:8080/api/books/1/rate?rating=4.5"
     }
 }

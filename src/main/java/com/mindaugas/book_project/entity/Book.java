@@ -4,14 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Data
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @NoArgsConstructor
 public class Book {
     @Id
@@ -27,6 +26,19 @@ public class Book {
     private String genre;
     @NonNull
     private Double rating;
-
+    @ElementCollection
+    @CollectionTable(name = "book_ratings", joinColumns = @JoinColumn(name = "book_id"))
+    @Column(name = "rating")
+    private List<Double> allRatings = new ArrayList<>();
     private String description;
+
+    // Constructor to initialize allRatings
+    public Book(String title, String author, Integer year, String genre, Double rating) {
+        this.title = title;
+        this.author = author;
+        this.year = year;
+        this.genre = genre;
+        this.rating = rating;
+        this.allRatings.add(rating);
+    }
 }
