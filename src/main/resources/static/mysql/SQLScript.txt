@@ -1,0 +1,4 @@
+// For now, you need to create schema in MySql manually using this command:
+CREATE DATABASE book_project;
+
+// Will try to look for solution that it would be created automatically.
